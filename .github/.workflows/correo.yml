@@ -1,0 +1,21 @@
+name: correo
+
+on:
+  push:
+    branches: [main, feature_a, feature_b]
+
+jobs:
+  mail:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          secure: true
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          from: ${{ secrets.EMAIL_USERNAME }}
+          to: ${{ secrets.EMAIL_TO }}
+          subject: "Cambios subidos a ${{ github.ref_name }}"
+          body: "Se han subido cambios a la rama: ${{ github.ref_name }}"
